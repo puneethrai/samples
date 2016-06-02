@@ -284,4 +284,5 @@ function hangup() {
     hangupButton.disabled = true;
     callButton.disabled = true;
     upgradeButton.disabled = true;
+    upgradeButton.textContent = "Upgrade";
 }
