@@ -73,16 +73,7 @@ function start(mediaConstraint) {
     trace('Requesting local stream');
     mediaConstraint = mediaConstraint instanceof MouseEvent ? null : mediaConstraint;
     startButton.disabled = true;
-    if (localStream) {
-        if (localStream.getTracks) {
-            localStream.getTracks().forEach(function (mediaTracks) {
-                mediaTracks.stop();
-            });
-        } else {
-            localStream.stop();
-        }
-        localStream = null;
-    }
+    stopMedia();
     return navigator.mediaDevices.getUserMedia(mediaConstraint || {
             audio: true,
             video: false
@@ -93,8 +84,20 @@ function start(mediaConstraint) {
         });
 }
 
-function stop() {
+function stopMedia() {
+    if (localStream) {
+        if (localStream.getTracks) {
+            localStream.getTracks().forEach(function (mediaTracks) {
+                mediaTracks.stop();
+            });
+        } else {
+            localStream.stop();
+        }
+        localStream = null;
 
+        startButton.disabled = false;
+        callButton.disabled = true;
+    }
 }
 
 function modify() {
@@ -275,6 +278,7 @@ function hangup() {
     trace('Ending call');
     pc1.close();
     pc2.close();
+    stopMedia();
     pc1 = null;
     pc2 = null;
     hangupButton.disabled = true;
