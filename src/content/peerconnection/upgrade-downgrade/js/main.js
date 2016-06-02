@@ -282,6 +282,6 @@ function hangup() {
     pc1 = null;
     pc2 = null;
     hangupButton.disabled = true;
-    callButton.disabled = false;
+    callButton.disabled = true;
     upgradeButton.disabled = true;
 }
